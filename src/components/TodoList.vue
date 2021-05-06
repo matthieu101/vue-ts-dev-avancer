@@ -2,8 +2,8 @@
   <div>
     <h1>My To-Do App!</h1>
     <ul>
-      <li v-for="task in tasks" v-bind:key="task.id">
-        <input :id="task.id" :value="task" name="task" type="checkbox" v-model="checkeds" @change="decrement(task.id)">
+      <li v-for="(task,$index) in listTask" v-bind:key="$index">
+        <input :id="$index" :value="task" name="task" type="checkbox" v-model="task.completed" @click="updateCounter($index)">
         <label><span>{{task.description}}</span></label>
       </li>
     </ul>
@@ -11,24 +11,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import store from '@/store'
-
+import { defineComponent, inject } from 'vue'
 export default defineComponent({
   name: 'TodoList',
-  props: {
-    tasks: Object
-  },
-  data () {
+  setup () {
+    const listTask: Array<any> = (inject('listTask') as Array<any>)
+    const counter: number = (inject('listTaskNotCompleted') as number)
     return {
-      checked: false,
-      checkeds: []
+      counter,
+      listTask
     }
   },
   methods: {
-    decrement (id: number) {
-      store.commit('addTaskCompleted', id)
-      console.log(this.checkeds)
+    updateCounter (index: number) {
+      if (this.listTask[index].completed == true) {
+        this.counter++;
+        this.listTask[index].completed = false;
+      } else {
+        this.counter--;
+        this.listTask[index].completed = true;
+      }
     }
   }
 })

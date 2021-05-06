@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, inject } from 'vue'
 
 export default defineComponent({
   name: 'TodoFormCreation',
@@ -20,10 +20,19 @@ export default defineComponent({
       description: ''
     }
   },
+  setup () {
+    const listTask: any = inject('listTask')
+    const counter: any = inject('listTaskNotCompleted')
+    return {
+      counter,
+      listTask
+    }
+  },
   methods: {
     onSubmit () {
       this.$emit('review-submitted', this.description)
-
+      this.listTask.push({ id: this.listTask.length, description: this.description, completed: false });
+      this.counter++;
       this.description = ''
     }
   }

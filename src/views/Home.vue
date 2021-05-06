@@ -1,17 +1,16 @@
 <template>
   <div class="home">
-    <HeaderBar :count="count"/>
+    <HeaderBar />
     <img alt="Vue logo" src="../assets/logo.png">
     <TodoList :tasks="list"/>
     <TodoFormCreation @review-submitted="addTask"></TodoFormCreation>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, provide, ref, reactive } from 'vue'
 import TodoFormCreation from '@/components/TodoFormCreation.vue'
 import TodoList from '@/components/TodoList.vue'
 import HeaderBar from '@/components/HeaderBar.vue'
-import store from '@/store'
 
 export default defineComponent({
   name: 'Home',
@@ -21,19 +20,12 @@ export default defineComponent({
     HeaderBar
   },
   computed: {
-    count () {
-      return store.state.count;
-    }
   },
-  data () {
-    return {
-      list: store.state.listTask
-    }
-  },
-  methods: {
-    addTask (description: string) {
-      store.commit('addTask', description)
-    }
+  setup () {
+    const counter = ref(2)
+    const listTask = reactive([{ id: 0, description: 'Make Coffee', completed: false }, { id: 1, description: 'Feed Dragons', completed: false }])
+    provide('listTask', listTask)
+    provide('listTaskNotCompleted', counter)
   }
 })
 </script>

@@ -1,14 +1,17 @@
 <template>
-    <h1>{{ count }}</h1>
+    <h1>{{ listTaskNotCompleted }}</h1>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, inject } from 'vue'
 
 export default defineComponent({
   name: 'HeaderBar',
-  props: {
-    count: String
+  setup () {
+    const listTaskNotCompleted = inject('listTaskNotCompleted', 'false');
+    return {
+      listTaskNotCompleted
+    }
   }
 })
 </script>
