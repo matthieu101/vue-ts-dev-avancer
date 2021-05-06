@@ -1,18 +1,39 @@
 <template>
   <div class="home">
+    <HeaderBar :count="count"/>
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <TodoList :tasks="list"/>
+    <TodoFormCreation @review-submitted="addTask"></TodoFormCreation> 
   </div>
 </template>
-
 <script lang="ts">
 import { defineComponent } from 'vue'
-import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
+import TodoFormCreation from '@/components/TodoFormCreation.vue'
+import TodoList from '@/components/TodoList.vue'
+import HeaderBar from '@/components/HeaderBar.vue'
+import store from '@/store'
 
 export default defineComponent({
   name: 'Home',
   components: {
-    HelloWorld
+    TodoList,
+    TodoFormCreation,
+    HeaderBar
+  },
+  computed: {
+    count() {
+        return store.state.count;
+    }
+},
+  data () {
+    return {
+      list: store.state.listTask,
+    }
+  },
+  methods:{
+    addTask(productReview: { id:number; description: string; completed: boolean }) {
+      store.commit('addTask', productReview)
+    },
   }
 })
 </script>
