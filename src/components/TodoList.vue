@@ -24,7 +24,7 @@ export default defineComponent({
   },
   methods: {
     updateCounter (index: number) {
-      if (this.listTask[index].completed == true) {
+      if (this.listTask[index].completed === true) {
         this.counter++;
         this.listTask[index].completed = false;
       } else {
