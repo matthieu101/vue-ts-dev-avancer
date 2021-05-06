@@ -3,7 +3,7 @@
     <HeaderBar :count="count"/>
     <img alt="Vue logo" src="../assets/logo.png">
     <TodoList :tasks="list"/>
-    <TodoFormCreation @review-submitted="addTask"></TodoFormCreation> 
+    <TodoFormCreation @review-submitted="addTask"></TodoFormCreation>
   </div>
 </template>
 <script lang="ts">
@@ -21,19 +21,19 @@ export default defineComponent({
     HeaderBar
   },
   computed: {
-    count() {
-        return store.state.count;
-    }
-},
-  data () {
-    return {
-      list: store.state.listTask,
+    count () {
+      return store.state.count;
     }
   },
-  methods:{
-    addTask(productReview: { id:number; description: string; completed: boolean }) {
-      store.commit('addTask', productReview)
-    },
+  data () {
+    return {
+      list: store.state.listTask
+    }
+  },
+  methods: {
+    addTask (description: string) {
+      store.commit('addTask', description)
+    }
   }
 })
 </script>

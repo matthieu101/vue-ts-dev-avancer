@@ -3,22 +3,21 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     count: 2,
-    listTask: [{ id: 1, description: 'Make Coffee', completed: false },
-    { id: 2, description: 'Feed Dragons', completed: false }],
+    listTask: [{ id: 0, description: 'Make Coffee', completed: false },
+      { id: 1, description: 'Feed Dragons', completed: false }]
   },
   mutations: {
-    addTask (state, task: any) {
-      state.listTask.push(task);
+    addTask (state, description: string) {
+      state.listTask.push({ id: state.listTask.length, description: description, completed: false });
       state.count++;
     },
     addTaskCompleted (state, id: number) {
-      for (var i = 0; i < state.listTask.length; i++){
-        if (state.listTask[i].id == id){
-          if(state.listTask[i].completed == true)
-          {
+      for (let i = 0; i < state.listTask.length; i++) {
+        if (state.listTask[i].id === id) {
+          if (state.listTask[i].completed === true) {
             state.count++;
             state.listTask[i].completed = false;
-          }else{
+          } else {
             state.count--;
             state.listTask[i].completed = true;
           }
@@ -27,10 +26,10 @@ export default createStore({
     }
   },
   actions: {
-    increment ({commit}) {
+    increment ({ commit }) {
       commit('increment')
     },
-    decrement ({commit}) {
+    decrement ({ commit }) {
       commit('decrement')
     }
   },

@@ -15,22 +15,17 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'TodoFormCreation',
-  data(){
-      return{
-        description: '',
-      }
+  data () {
+    return {
+      description: ''
+    }
   },
   methods: {
-   onSubmit() {
-     let productReview = {
-       description: this.description,
-       completed: false,
-     }
-     this.$emit('review-submitted', productReview)
-     console.log(productReview);
+    onSubmit () {
+      this.$emit('review-submitted', this.description)
 
-     this.description = ''
-   }
+      this.description = ''
+    }
   }
 })
 </script>

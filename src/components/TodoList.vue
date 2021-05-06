@@ -3,7 +3,7 @@
     <h1>My To-Do App!</h1>
     <ul>
       <li v-for="task in tasks" v-bind:key="task.id">
-        <input :id="task.id" :value="task" name="task" type="checkbox" v-model="checkeds" @change="decrement($event, task.id)">
+        <input :id="task.id" :value="task" name="task" type="checkbox" v-model="checkeds" @change="decrement(task.id)">
         <label><span>{{task.description}}</span></label>
       </li>
     </ul>
@@ -25,14 +25,11 @@ export default defineComponent({
       checkeds: []
     }
   },
-  updated() {
-
-  },
   methods: {
-      decrement(event: any, id: number){
-          store.commit('addTaskCompleted', id)
-          console.log(this.checkeds)
-      }
+    decrement (id: number) {
+      store.commit('addTaskCompleted', id)
+      console.log(this.checkeds)
+    }
   }
 })
 </script>
